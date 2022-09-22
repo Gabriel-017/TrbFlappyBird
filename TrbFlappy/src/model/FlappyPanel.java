@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class FlappyPanel extends JPanel implements KeyListener, ActionListener {
 
+    //variavesi
    final int WIDTH = 525, HEIGHT = 550; //tela
    final int VELOCIDADECANO = 5;
    final int CANOWITHD = 50;
@@ -19,11 +20,13 @@ public class FlappyPanel extends JPanel implements KeyListener, ActionListener {
     int score = 0;
         int[] canoX = {WIDTH, WIDTH + WIDTH / 2};
         int[] espaco = {(int)(Math.random() * (HEIGHT - 150)), (int)(Math.random() * (HEIGHT - 150))};
-        boolean FimDeJogo = false;
+            boolean FimDeJogo = false;
             Timer tempo = new Timer(40, this);
 
 
     public FlappyPanel (){
+
+        //fundo
         setSize(WIDTH, HEIGHT);
         setFocusable(true);
         addKeyListener(this);
@@ -34,8 +37,10 @@ public class FlappyPanel extends JPanel implements KeyListener, ActionListener {
 
     public void actionPerformed(ActionEvent e){
 
+        //configuração do cubo
         flappyAcel += flappyI;
         flappyVel += flappyAcel;
+
             canoX[0] -= VELOCIDADECANO;
             canoX[1] -= VELOCIDADECANO;
 
@@ -57,19 +62,19 @@ public class FlappyPanel extends JPanel implements KeyListener, ActionListener {
                 tempo.start();
 
             }
-                //botão para resetar
+                //botão para reiniciar
             if (code == e.VK_R){
                 tempo.stop();
                 flappyAltura = HEIGHT / 4;
                 flappyVel = 0;
                 flappyAcel = 8;
                 score = 0;
-                canoX[0] = WIDTH;
-                canoX[1] = WIDTH + WIDTH / 2;
-                espaco[0] = (int)(Math.random() * (HEIGHT - 150));
-                espaco[1] = (int)(Math.random() * (HEIGHT - 150));
-                FimDeJogo = false;
+                 canoX[0] = WIDTH;
+                 canoX[1] = WIDTH + WIDTH / 2;
+                    espaco[0] = (int)(Math.random() * (HEIGHT - 150));
+                    espaco[1] = (int)(Math.random() * (HEIGHT - 150));
 
+                    FimDeJogo = false;
 
                 repaint();
             }
@@ -79,6 +84,8 @@ public class FlappyPanel extends JPanel implements KeyListener, ActionListener {
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
+
+        //exibir componentes
 
        if (!FimDeJogo) {
 
@@ -93,17 +100,19 @@ public class FlappyPanel extends JPanel implements KeyListener, ActionListener {
            g.setColor(Color.WHITE);
            g.drawString("PONTOS: " + score, WIDTH / 2, 10);
        }
-
        }
 
     private void drawFlappy(Graphics g){
+
+        //desenhar o cubo
+
         g.setColor(Color.YELLOW);
 
-        //BufferedImage jogador = load("Resources/Bird.png");
+        //BufferedImage jogador = export("Resources/Bird.png"); (tentativa de trocar o cubo pela imagem do passaro)
 
-        //g.drawImage(jogador, 75, flappyAltura + flappyVel, null);
+        //g.drawImage(jogador, 75, flappyAltura + flappyVel, null);(tentativa de trocar o cubo pela imagem do passaro)
 
-        //getClass().getResource("/resources/imagem/myImage.Bird.png");
+        //getClass().getResource("/resources/imagem/myImage.Bird.png");(tentativa de trocar o cubo pela imagem do passaro)
 
         g.fillRect(75, flappyAltura + flappyVel, 25, 25);
 
@@ -126,19 +135,22 @@ public class FlappyPanel extends JPanel implements KeyListener, ActionListener {
 
     private void logica() {
 
+        //configuração da hitbox
         for (int i = 0; i < 2; i++) {
 
-            if (canoX[i] <= 100 && canoX[i] + CANOWITHD >= 100 || canoX[1] <= 1000 && canoX[i] + CANOWITHD >= 1000) {
+            if (canoX[i] <= 100 && canoX[i] + CANOWITHD >= 100
+                    || canoX[1] <= 1000 && canoX[i] + CANOWITHD >= 1000) {
 
                 if ((flappyAltura + flappyVel) >= 0 && (flappyAltura + flappyVel) <= espaco[i]
                         || (flappyAltura + flappyVel + 25) >= espaco[i] + 100 && (flappyAltura + flappyVel + 25) <= HEIGHT) {
-
 
                     FimDeJogo = true;
                 }
             }
 
-            if (flappyAltura + flappyVel <= 0 || flappyAltura + flappyVel + 25 >= HEIGHT){
+            if (flappyAltura + flappyVel <= 0
+                    || flappyAltura + flappyVel + 25 >= HEIGHT){
+
                         FimDeJogo = true;
             }
 
@@ -148,15 +160,14 @@ public class FlappyPanel extends JPanel implements KeyListener, ActionListener {
 
             if(canoX[i] + CANOWITHD <= 0){
                 canoX[i] = WIDTH;
-                espaco[i] = (int)(Math.random() * (HEIGHT - 150));
+                    espaco[i] = (int)(Math.random() * (HEIGHT - 150));
             }
-
         }
     }
 
-    //tentativa de por o passaro
+    //tentativa de exportar a imagem do passaro
 
-    public BufferedImage load (String path){
+    public BufferedImage export (String path){
         BufferedImage img = null;
         try{
             img = ImageIO.read(new File(path));
@@ -166,9 +177,9 @@ public class FlappyPanel extends JPanel implements KeyListener, ActionListener {
         return img;
     }
 
+    //manter key event
     public void keyReleased(KeyEvent e){
     }
-
 
     public void keyTyped(KeyEvent e){
     }
