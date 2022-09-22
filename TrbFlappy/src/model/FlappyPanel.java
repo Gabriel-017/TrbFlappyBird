@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class FlappyPanel extends JPanel implements KeyListener, ActionListener {
 
-    //variavesi
+    //variaveis
    final int WIDTH = 525, HEIGHT = 550; //tela
    final int VELOCIDADECANO = 5;
    final int CANOWITHD = 50;
